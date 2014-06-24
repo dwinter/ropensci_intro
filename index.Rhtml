@@ -121,6 +121,142 @@ end.rcode-->
 
 <!--    ##############    slide delimiter  ##############    -->
 
+<section class="slide" id="title">
+	<div>
+	<br><br>
+	<hgroup>
+    <center><h3><span style="color:#34495E; font-size:70px">
+    rEntrez and the rest of the rOpenSci family</span><i class="ss-globe"></i>
+
+
+	</h3>
+	<!--begin.rcode echo=FALSE, results='asis'
+	cat(author_name)
+	end.rcode-->
+
+	</hgroup>
+	</div>
+</section>
+
+
+<!--    ##############    slide delimiter  ##############    -->
+
+<section class="slide" id="rentrez">
+	<div>
+	<br><br>
+	<hgroup>
+    <center>
+        <h2>
+        <code>rentrez</code> is a low-level R library that wraps the NCBI Eutils's API
+    	</h2>
+    </center>
+        <h3>
+        <ul>
+
+          <li>Provides programatic acess to records in Genbank, Taxonomy,
+        Pubmed...</li>
+          <li> Search  databases and links between records
+          </li>
+          <li> Parses Pubmed and summary records into natural R objects
+          </li>
+         </ul>
+        <h3>
+
+	</hgroup>
+	</div>
+</section>
+
+<!--    ##############    slide delimiter  ##############    -->
+
+<section class="slide" id="motivation">
+	<div>
+	<br><br>
+	<hgroup>
+        <h2>
+        Why I did it...
+    	</h2>
+
+<!--begin.rcode
+    suppressMessages(
+       library(rentrez)
+    )
+    pubmed_search <- entrez_search(db = "pubmed", term = "10.1016/j.ympev.2010.07.013[doi]")
+    pubmed_search$id
+    end.rcode-->
+	</hgroup>
+	</div>
+</section>
+    
+
+<!--    ##############    slide delimiter  ##############    -->
+
+
+<section class="slide" id="motivation">
+	<div>
+	<br><br>
+	<hgroup>
+        <h2>
+        Why I did it...
+    	</h2>
+
+<!--begin.rcode
+    (NCBI_data <- entrez_link(dbfrom = "pubmed", 
+                              id = pubmed_search$id, 
+                              db = "all"))
+    end.rcode-->
+	</hgroup>
+	</div>
+</section>
+    
+    
+
+<!--    ##############    slide delimiter  ##############    -->
+
+<section class="slide" id="motivation">
+	<div>
+	<br><br>
+	<hgroup>
+        <h2>
+        Why I did it...
+    	</h2>
+
+<!--begin.rcode
+    data_summaries <- entrez_summary(db = "popset", 
+                                     id = NCBI_data$pubmed_popset)
+    sapply(data_summaries, "[[", "Title")
+
+    end.rcode-->
+	</hgroup>
+	</div>
+</section>
+   
+
+<!--    ##############    slide delimiter  ##############    -->
+
+<section class="slide" id="motivation">
+	<div>
+	<br><br>
+	<hgroup>
+        <h2>
+        Why I did it...
+    	</h2>
+
+<!--begin.rcode
+coi <- entrez_fetch(db = "popset", 
+                    id = NCBI_data$pubmed_popset[1], 
+                    rettype = "fasta")
+head(coi)
+
+    end.rcode-->
+	</hgroup>
+	</div>
+</section>
+
+
+<!--    ##############    slide delimiter  ##############    -->
+
+
+
 <section class="slide" id="ropensci">
 	<div>
 	<br><br>
@@ -130,10 +266,6 @@ end.rcode-->
 
 
 	<h3>
-	<!--begin.rcode echo=FALSE, results='asis'
-	cat(author_name)
-	end.rcode-->
-
 
 	<br> <span style="color:#464749">Made possible by: </span><br><img src="images/sloan_logo2.png"></a> </h3>
 	<br>
